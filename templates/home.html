@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="d-flex flex-wrap px-5 pt-3 align-items-center">
+  <div class="col-5">
+    <h1>Welcome to Car Mart!</h1>
+    <p>
+      Your premier destination for quality pre-owned vehicles. Explore our
+      diverse inventory of cars, trucks, and SUVs, hand-picked from trusted
+      manufacturers. Our user-friendly website allows you to browse listings
+      with detailed descriptions and photos, making it easy to find your perfect
+      match. Enjoy flexible financing options tailored to your needs, supported
+      by our experienced finance team. Count on our friendly staff for expert
+      assistance throughout your car-buying journey. With competitive pricing
+      and exceptional customer service, Car Mart is your go-to destination for
+      finding the ideal pre-owned vehicle. Visit us today and drive away in
+      confidence!
+    </p>
+  </div>
+  <div class="col-2"></div>
+  <div class="col-5">
+    <img
+      style="width: 500px; border-radius: 5px"
+      src="{% static 'car-mart.jpg' %}"
+    />
+  </div>
+</div>
+<h4 class="px-5 mt-5 mb-4">All Categories:</h4>
+<div class="px-5 d-flex gap-4 mb-4">
+  {% for cat in category %}
+  <a
+    class="btn btn-outline-danger"
+    href="{% url 'category_wise_post' cat.slug %}"
+    >{{cat.name}}</a
+  >
+  {% endfor %}
+</div>
+
+<div class="d-flex flex-wrap px-5">
+  <div class="col-10">
+    <h5 class="text-success">Result/s found: {{data | length}}</h5>
+    <div class="d-flex flex-wrap">
+      {% for post in data %}
+      <div class="col-sm-3">
+        <div class="card m-2">
+          <div class="card-body">
+            <img src="{{post.image.url}}" class="card-img-top" alt="..." />
+            <h5 class="card-title">
+              <a
+                href="{% url 'detail_post' post.id %}"
+                class="text-decoration-none text-dark"
+                >{{post.title}}</a
+              >
+            </h5>
+            <p>Price: {{post.price}} $</p>
+            <p>
+              Brand : {% for cat in post.category.all %}
+              <button class="btn btn-outline-dark btn-sm m-2" disabled>
+                {{cat.name}}
+              </button>
+              {% endfor %}
+            </p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
