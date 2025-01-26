@@ -61,15 +61,17 @@ def edit_profile(request):
 
 def pass_change(request):
     if request.method == "POST":
-        form = PasswordChangeForm(request.user, data=request.POST)
+        form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, "Password Updated Successfully")
-            update_session_auth_hash(request, form.user)
+            update_session_auth_hash(
+                request, request.user
+            )  # form.user o deoa jay...also ei function lage jate user logged out na hoye jay password change er pore
             return redirect("profile")
 
     else:
-        form = PasswordChangeForm(user=request.user)
+        form = PasswordChangeForm(request.user)
     return render(request, "pass_change.html", {"form": form})
 
 

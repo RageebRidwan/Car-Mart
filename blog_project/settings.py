@@ -25,8 +25,11 @@ SECRET_KEY = "django-insecure-6y)w(f3%4sywsag6q0$2gll@pk$3_-1((1(=1s6q=6j%61e+_l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://employee-management-system-4thw.onrender.com",
+    "https://*.127.0.0.1",  # Use the full URL
+]
 
 # Application definition
 
